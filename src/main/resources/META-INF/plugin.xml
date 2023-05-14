@@ -25,6 +25,14 @@
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
+        <notificationGroup id="SUC-Notification"
+                           displayType="BALLOON"/>
+        <typedHandler implementation="me.naotiki.sucideaplugin.listeners.SUCTypedHandler"/>
+        <postStartupActivity implementation="me.naotiki.sucideaplugin.listeners.ProjectStartupActivity"/>
 
     </extensions>
+    <projectListeners>
+        <listener class="me.naotiki.sucideaplugin.listeners.MyListener"
+                  topic="com.intellij.execution.ExecutionListener"/>
+    </projectListeners>
 </idea-plugin>
