@@ -11,7 +11,6 @@ import java.io.DataInputStream
 import java.net.ServerSocket
 import java.net.Socket
 import java.nio.ByteBuffer
-import kotlin.reflect.typeOf
 
 const val PORT = 0xCAD
 class Server(val port: Int=PORT) {
@@ -28,6 +27,7 @@ class Server(val port: Int=PORT) {
     }
 }
 class ServerThread(val socket: Socket) : Thread() {
+    @OptIn(ExperimentalSerializationApi::class)
     override fun run() {
         println("Ready")
         var sin = DataInputStream(socket.getInputStream())
@@ -56,8 +56,8 @@ class ServerThread(val socket: Socket) : Thread() {
                     }
                     ServerProtocol.End -> TODO()
                     else -> {}
-                }
 
+                }
             }
 
             if (socket.isClosed) {
@@ -77,7 +77,7 @@ sealed interface Event {
     @Serializable
     data class FailedBuild(val buildId:String):Event
     @Serializable
-    data class Typed(val string: String):Event
+    data class Typed(val char: Char):Event
 }
 
 @Serializable
